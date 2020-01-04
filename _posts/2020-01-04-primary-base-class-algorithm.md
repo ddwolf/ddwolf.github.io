@@ -6,7 +6,7 @@ clang -Xclang -fdump-record-layouts abi_example_1.cpp
 ```
 
 计算primary base class的算法
-1. 第一个非虚继承的动态类，如果不存在，则
+1. 第一个非虚继承的动态（直接）其类，如果不存在，则
 2. 第一个nearly empty class，且不能是indirect primary base；
 3. 如果所有的nearly empty base class都是indirect primary base，则选择其中第一个作为primary base class
 
@@ -38,4 +38,12 @@ struct C : public virtual B {};
 struct A {virtual void f();}
 struct B : public virtual A {int i;};
 struct C : public virutal B {};
+```
+
+示例5:
+```cpp
+// 与示例一类似，但B对A只是普通的继承，对应算法中的第二个条件，B是第一个nearly empty virtual base class，所以B是C的primary (virtual) base
+struct A {virtual void f();};
+struct B : public A {};
+struct C : public virtual B {};
 ```
