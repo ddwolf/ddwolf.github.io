@@ -6,8 +6,8 @@ clang -Xclang -fdump-record-layouts abi_example_1.cpp
 ```
 
 计算primary base class的算法
-1. 第一个非虚继承的动态（直接）其类，如果不存在，则
-2. 第一个nearly empty class，且不能是indirect primary base；
+1. 第一个非虚继承的动态（直接）基类，如果不存在，则
+2. 第一个nearly empty proper base class，且不能是indirect primary base；
 3. 如果所有的nearly empty base class都是indirect primary base，则选择其中第一个作为primary base class
 
 示例1:
