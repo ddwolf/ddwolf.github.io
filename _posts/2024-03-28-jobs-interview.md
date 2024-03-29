@@ -58,5 +58,32 @@
 
 ## 代码编程题
  - 不使用锁，利用 `N` 个线程顺序打印 `1` ~ `M`
+```cpp
+constexpr int M = 7;
+constexpr int N = 2;
+atomic<unsigned int> curNum {std::numeric_limits<unsigned int>::max() - 9};
+atomic<int> curNode{0};
+void debug2(int a) {
+  cout << a << ":" << (curNum % M) << endl << flush;
+}
+
+int main() {
+    thread *threads[N];
+    for (int i = 0; i < N; ++i) {
+        threads[i] = new thread([i](){
+            int index = i;
+            while (true) {
+                if (curNode % N == i) {
+                    debug2(index);
+                    curNum = (curNum + 1) % M;
+                    curNode = (curNode + 1 ) % N;
+                }
+            }
+        });
+    }
+    for (int i = 0; i < N; ++i) {
+        threads[i]->join();
+    }
+}```
  - 两个字符串分别用于基因描述，格式为 `xCxCxC` ...，`x` 代表后面的 `C` 出现的次数，`C` 代表 `ACTG` 四个字母中的一个。需要计算出这两个基因串中相同位置字母相同的比例。
 
