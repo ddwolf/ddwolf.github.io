@@ -1,6 +1,6 @@
 # 四叉树用graphviz画出来，不同的样式如下
 1. dot
-![](im/dot.png)
+![](img/dot.png)
 2. 
 
 # 源码
