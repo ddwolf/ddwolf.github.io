@@ -46,6 +46,17 @@
 
 源: 与必应的对话， 2024/3/29
 (1) 分布式存储系统数据可靠性技术 - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/624890449.
-(2) 分布式存储配置要求_分布式存储的节点实际可得容量-CSDN博客. https://blog.csdn.net/huapeng_guo/article/details/132169088.
+(2) 分布式存储配置要求\_分布式存储的节点实际可得容量-CSDN博客. https://blog.csdn.net/huapeng\_guo/article/details/132169088.
 (3) 分布式存储的优势有哪些？ - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/128997085.
 (4) 运维分布式存储：提升数据安全性和可靠性的关键-PingCAP | 平凯星辰. https://cn.pingcap.com/article/post/9754.html.
+
+## 分布式一致性协议的选主流程对对比优缺点。
+ - `paxos` 以 nodeId 最大的节点为主
+ - `raft` 选择具有最大 `commit index`，且 `term` 最大的 candidate 为主
+ - `zookeeper` 选择具体最大 `round number` 且 `zkid` 权重最大的节点为主。这个选主方式相对 `raft` 能更快的选出主。因为同一轮投票中，每次比较两张选票的时候都具有倾向性，货币选择具有最大 `zxid` 的节点为主。
+ - 问这个问题的时候考官想知道我是否了解业界最新的选主方案
+
+## 代码编程题
+ - 不使用锁，利用 `N` 个线程顺序打印 `1` ~ `M`
+ - 两个字符串分别用于基因描述，格式为 `xCxCxC` ...，`x` 代表后面的 `C` 出现的次数，`C` 代表 `ACTG` 四个字母中的一个。需要计算出这两个基因串中相同位置字母相同的比例。
+
