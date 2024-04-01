@@ -45,10 +45,10 @@
 为了实现这些可用性要求，分布式存储系统通常采用多副本、数据冗余、故障切换等技术来提高系统的稳定性和可靠性¹²³⁴。
 
 源: 与必应的对话， 2024/3/29
-(1) 分布式存储系统数据可靠性技术 - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/624890449.
-(2) 分布式存储配置要求\_分布式存储的节点实际可得容量-CSDN博客. https://blog.csdn.net/huapeng\_guo/article/details/132169088.
-(3) 分布式存储的优势有哪些？ - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/128997085.
-(4) 运维分布式存储：提升数据安全性和可靠性的关键-PingCAP | 平凯星辰. https://cn.pingcap.com/article/post/9754.html.
+1. 分布式存储系统数据可靠性技术 - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/624890449.
+2. 分布式存储配置要求\_分布式存储的节点实际可得容量-CSDN博客. https://blog.csdn.net/huapeng\_guo/article/details/132169088.
+3. 分布式存储的优势有哪些？ - 知乎 - 知乎专栏. https://zhuanlan.zhihu.com/p/128997085.
+4. 运维分布式存储：提升数据安全性和可靠性的关键-PingCAP | 平凯星辰. https://cn.pingcap.com/article/post/9754.html.
 
 ## 分布式一致性协议的选主流程对对比优缺点。
  - `paxos` 以 nodeId 最大的节点为主
@@ -58,6 +58,7 @@
 
 ## 代码编程题
  - 不使用锁，利用 `N` 个线程顺序打印 `1` ~ `M`
+
 ```cpp
 constexpr int M = 7;
 constexpr int N = 2;
@@ -84,6 +85,7 @@ int main() {
     for (int i = 0; i < N; ++i) {
         threads[i]->join();
     }
-}```
+}
+```
  - 两个字符串分别用于基因描述，格式为 `xCxCxC` ...，`x` 代表后面的 `C` 出现的次数，`C` 代表 `ACTG` 四个字母中的一个。需要计算出这两个基因串中相同位置字母相同的比例。
-
+    [gene.cpp](/codes/gene.cpp)
