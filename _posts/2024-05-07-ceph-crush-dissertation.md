@@ -21,7 +21,7 @@ the hierarchy in a simple execution environment
 ## Bucket Types
 CRUSH defines four different kinds of buckets to represent internal (non-leaf) nodes in the cluster hierarchy.
  * uniform buckets - contain items that are all of the same weight 
-   - $c(r,x) = (hash(x)+rp) \mod m$, where $p$ is a randomly (but deterministically) chosen prime number greater
+   - \(c(r,x) = (hash(x)+rp) \mod m\), where \(p\) is a randomly (but deterministically) chosen prime number greater
 than m
  * list buckets - 
  * tree buckets
