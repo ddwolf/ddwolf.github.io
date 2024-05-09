@@ -40,7 +40,7 @@ Summary of mapping speed and data reorganization efficiency of different bucket 
 
 ## Algorithm 1 CRUSH placement for object x 
 
-$\text{procedure TAKE(a) \qquad}\triangleleft \text{ Put item a in working vector~i}\\
+$`\text{procedure TAKE(a) \qquad}\triangleleft \text{ Put item a in working vector~i}\\
 \quad\overrightarrow i\text{ ← }[a]\\
 \text{end procedure}\\
 \text{procedure SELECT(n,t) \qquad}\triangleleft \text{ Select n items of type t}\\
@@ -81,4 +81,4 @@ $\text{procedure TAKE(a) \qquad}\triangleleft \text{ Put item a in working vecto
 \text{procedure EMIT \qquad}\triangleleft \text{ Append working vector }\overrightarrow i\text{ to result}\\
 \quad\overrightarrow R ← [\overrightarrow R,\overrightarrow i]\\
 \text{end procedure}\\
-$
+`$
