@@ -11,9 +11,9 @@ email:       'duxiutao(at)gmail(dot)com'
 description: '专注是第一生产力'
 baseurl:     '' # The subpath of your site, e.g. /blog
 url:         'https://ddwolf.github.io/' # The base hostname & protocol for your site
-twitter:     'ddwolf'
-github:      ''
-instagram:   ''
+twitter:     'https://twitter.com/duxiutao'
+github:      'https://www.github.com/ddwolf'
+# instagram:   ''
 facebook:    'https://www.facebook.com/xiutao.du'
 
 markdown:  kramdown
