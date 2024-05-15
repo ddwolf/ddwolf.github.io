@@ -1,8 +1,8 @@
------   
-layout: post   
-title: "paxos made simple"   
-date: 2024-05-16   
------   
+---
+layout: post
+title: "paxos made simple 学习笔记"  
+date: 2024-05-16
+---
 
 # paxos made simple 学习笔记         
 分布式一致性算法的目的是在存在多个节点同时可以针对某个决议进行投票的情况下，如何就某一个决议值达成一致。
