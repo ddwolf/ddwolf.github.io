@@ -1,3 +1,9 @@
+---
+layout: post
+title: "mockcpp代码分析"
+date: 2024-05-15
+---
+
 # 重点
 mockcpp实现方法重写的原理是覆盖原函数的字节码为一个jmp指令，具体可参考 JmpCodeImpl 
 
