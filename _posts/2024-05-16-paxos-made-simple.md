@@ -1,15 +1,18 @@
----
-layout: post     
-title: "paxos made simple"     
-date: 2024-05-16     
----
+-----   
+layout: post   
+title: "paxos made simple"   
+date: 2024-05-16   
+-----   
 
-# paxos made simple 学习笔记      
+# paxos made simple 学习笔记         
 分布式一致性算法的目的是在存在多个节点同时可以针对某个决议进行投票的情况下，如何就某一个决议值达成一致。
 
 
-- 安全性保障（safety）          
-  - 在所有被投票的值中，只有一个被最终选中    
+
+
+
+- 安全性保障（safety）            
+  - 在所有被投票的值中，只有一个被最终选中     
   - 有且只能有一个被选中    
   - 不能无中生有，没被选中的，不能被变为是选中的    
 - 活性保障（liveness）  
