@@ -1,3 +1,9 @@
+---
+layout: post
+title: "paxos made simple 学习笔记"
+date: 2024-05-16
+---       
+
 ### 这是一篇关于monitors和paxos的问答，转到这里，就算看过了（划掉）        
 ### Monitors and Paxos, a chat with Joao[1] 
 
