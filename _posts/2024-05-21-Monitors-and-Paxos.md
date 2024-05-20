@@ -1,7 +1,7 @@
 ---
-layout: post
-title: "paxos made simple 学习笔记"
-date: 2024-05-16
+layout: post  
+title: "ceph monitors and paxos, a chat with Joao"
+date: 2024-05-21
 ---       
 
 ### 这是一篇关于monitors和paxos的问答，转到这里，就算看过了（划掉）        
