@@ -1,9 +1,5 @@
+# 构建ceph可参考 https://drunkard.github.io/install/build-ceph/
 
-```bash
-mkdir build -p
-cd build
-cmake -GNinja -DWITH_PYTHON3=3 -DCMAKE_CXX_COMPILER=clang++-16 -DWITH_MANPAGE=OFF -DWITH_LZ4=OFF -DWITH_FUSE=OFF -DWITH_LTTNG=OFF -DWITH_RDMA=OFF -DWITH_OPENLDAP=OFF -DCMAKE_C_COMPILER=clang-16 -DWITH_BABELTRACE=OFF -DWITH_JAEGER=OFF -DWITH_RADOSGW=OFF -DWITH_XFS=OFF -DWITH_BLUESTORE=OFF ..
-```
 
 
 ## RADOS: A Scalable, Reliable Storage Service for Petabyte-scale Storage Clusters
