@@ -112,4 +112,6 @@ Loic: How do the election happen ?
 
 Joao: : They happen pretty much in the same way the proposal do. The monitor will trigger an election ( expired lease, monitor just started … ). It depends on ranks : they determine who will get elected. It’s based on the IP address : the higher the IP the higher the rank”, one should read “the lower the IP:PORT combination the higher the rank”. This means that 192.168.1.1:6789 will have a higher rank than 192.168.1.2:6789, which in turn will have a higher rank than 192.168.1.2:6790 (the first one would have rank 0, being the leader, and the remaining would have rank 1 and 2, respectively, being peons: lower numerical rank values means higher ranks).
 
-[1](https://ceph.io/en/news/blog/2013/monitors-and-paxos-a-chat-with-joao/) 
+
+
+1: https://ceph.io/en/news/blog/2013/monitors-and-paxos-a-chat-with-joao/
