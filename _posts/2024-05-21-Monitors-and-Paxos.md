@@ -5,7 +5,7 @@ date: 2024-05-21
 ---       
 
 ### 这是一篇关于monitors和paxos的问答，转到这里，就算看过了（划掉）        
-### Monitors and Paxos, a chat with Joao[1] 
+[Monitors and Paxos, a chat with Joao][1] 
 
 This is a dialog where Joao Luis, Ceph core developer with an intimate knowledge of the monitor, answers Loïc Dachary’s questions who discovers this area of the Ceph code base. Many answers are covered in Joao’s article Ceph’s New Monitor Changes (March 2013), with a different angle.
 
