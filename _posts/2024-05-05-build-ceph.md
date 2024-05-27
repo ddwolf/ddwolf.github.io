@@ -1,6 +1,21 @@
 # 构建ceph可参考 https://drunkard.github.io/install/build-ceph/
+pybind报错可参考这里 [https://tracker.ceph.com/issues/62140]
+报错信息如下： 
+```
+Error compiling Cython file:
+------------------------------------------------------------
+...
+        """
+        name = cstr(name, 'name')
+        cdef:
+            rados_ioctx_t _ioctx = convert_ioctx(ioctx)
+            char *_name = name
+            librbd_progress_fn_t _prog_cb = &no_op_progress_callback
+                                            ^
+------------------------------------------------------------
 
-
+rbd.pyx:760:44: Cannot assign type 'int (*)(uint64_t, uint64_t, void *) except? -1' to 'librbd_progress_fn_t' (alias of 'int (*)(uint64_t, uint64_t, void *) noexcept'). Exception values are incompatible. Suggest adding 'noexcept' to the type of the value being assigned.
+```
 
 ## RADOS: A Scalable, Reliable Storage Service for Petabyte-scale Storage Clusters
 ### Cluster Map 在存储节点和客户端之间互相复制。客户端也需要复制。Cluster Map 代表整个集群的数据分布，客户端可以在逻辑上把整个集群当成一个单一的存储对象
