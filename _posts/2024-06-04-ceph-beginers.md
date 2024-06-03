@@ -22,3 +22,15 @@ date: 2024-06-04
  - pools: 一个存储池可以使用复制（replication）或纠删码（erasure coded）来保护数据。
  - placement groups: 是 ceph 的核心技术，主要用于数据分布算法的实现。
  - mds: metadata server. ceph-fs 的核心组件。
+
+### 测试环境
+```bash
+# 构建 ceph 及 vstart. vstart 工具可以快速拉起一个调试环境
+cd $CEPH_SRC/build
+ninja vstart
+# 通过 vstart 创建并启动集群
+MON=1 OSD=6 MDS=0 MGR=1 RGW=0 ../src/vstart.sh -d -n -x
+# 通过 ./bin/ceph mgr services 可以查到mgr的访问url。如：x.x.x.x:41324
+# 之后访问网页就可以看到集群的情况了
+```
+![图片](https://github.com/ddwolf/ddwolf.github.io/assets/251396/33062916-fbff-48a8-9c37-ad902a2bfa61)
