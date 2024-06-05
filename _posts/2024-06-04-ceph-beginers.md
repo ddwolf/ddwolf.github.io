@@ -28,7 +28,7 @@ date: 2024-06-04
 # 构建 ceph 及 vstart. vstart 工具可以快速拉起一个调试环境
 cd $CEPH_SRC/build
 ninja vstart
-# 通过 vstart 创建并启动集群
+# 通过 vstart 创建并启动集群。改`MON=1`为`MON=3`就可以测试三副本情况下的paxos
 MON=1 OSD=6 MDS=0 MGR=1 RGW=0 ../src/vstart.sh -d -n -x
 # 通过 ./bin/ceph mgr services 可以查到mgr的访问url。如：x.x.x.x:41324
 # 之后访问网页就可以看到集群的情况了
