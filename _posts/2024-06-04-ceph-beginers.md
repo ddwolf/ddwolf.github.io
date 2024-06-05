@@ -27,6 +27,8 @@ date: 2024-06-04
 ```bash
 # 构建 ceph 及 vstart. vstart 工具可以快速拉起一个调试环境
 # 18/17/16版本在构建时会boost会报错，升级到19版本问题解决。可参考 [build-ceph](https://ddwolf.github.io/2024/05/05/build-ceph/) 这篇文章
+# 如果是为了学习，记得一定要开启 Debug 模式（下面的-DCMAKE_BUILD_TYPE=Debug），在wsl2下构建一次实在太久了
+rm -rf build; ./do_cmake.sh -DWITH_SYSTEM_BOOST=ON  -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
 cd $CEPH_SRC/build
 ninja vstart
 # 通过 vstart 创建并启动集群。改`MON=1`为`MON=3`就可以测试三副本情况下的paxos
