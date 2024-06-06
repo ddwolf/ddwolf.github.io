@@ -49,3 +49,34 @@ echo 123 > a.txt # 生成一个文件，后面我们把这个文件作为一个�
 ```
 
 ## 接下来就可以通过 gdb 去调试 paxos 了
+- paxos begin 调用栈
+```
+#3  0x000055e7cd4dbe08 in Paxos::begin(ceph::buffer::v15_2_0::list&) ()
+#4  0x000055e7cd4e33de in Paxos::propose_pending() ()
+#5  0x000055e7cd4e772d in Paxos::trigger_propose() ()
+#6  0x000055e7cd4f1aa6 in PaxosService::propose_pending() ()
+#7  0x000055e7cd4f381b in PaxosService::_active() ()
+#8  0x000055e7cd4f61ee in PaxosService::_active()::C_Active::finish(int) ()
+#9  0x000055e7cd260c2f in Context::complete(int) ()
+#10 0x000055e7cd21768c in void finish_contexts<std::__cxx11::list<Context*, std::allocator<Context*> > >(ceph::common::CephContext*, std::__cxx11::list<Context*, std::allocator<Context*> >&, int) ()
+#11 0x000055e7cd4ddd5d in Paxos::finish_round() ()
+#12 0x000055e7cd4db9af in Paxos::handle_last(boost::intrusive_ptr<MonOpRequest>) ()
+#13 0x000055e7cd4e6db1 in Paxos::dispatch(boost::intrusive_ptr<MonOpRequest>) ()
+#14 0x000055e7cd1f8d5f in Monitor::dispatch_op(boost::intrusive_ptr<MonOpRequest>) ()
+#15 0x000055e7cd1f45e0 in Monitor::_ms_dispatch(Message*) ()
+#16 0x000055e7cd2265e5 in Monitor::ms_dispatch(Message*) ()
+#17 0x000055e7cd226662 in Dispatcher::ms_dispatch2(boost::intrusive_ptr<Message> const&) ()
+#18 0x00007fb4bfba95aa in Messenger::ms_deliver_dispatch(boost::intrusive_ptr<Message> const&) ()
+   from /home/todd/kata/src/ceph/build/lib/libceph-common.so.2
+#19 0x00007fb4bfba775d in DispatchQueue::entry() () from /home/todd/kata/src/ceph/build/lib/libceph-common.so.2
+#20 0x00007fb4bfd3cf09 in DispatchQueue::DispatchThread::entry() () from /home/todd/kata/src/ceph/build/lib/libceph-common.so.2
+#21 0x00007fb4bf92b3a4 in Thread::entry_wrapper() () from /home/todd/kata/src/ceph/build/lib/libceph-common.so.2
+#22 0x00007fb4bf92b305 in Thread::_entry_func(void*) () from /home/todd/kata/src/ceph/build/lib/libceph-common.so.2
+#23 0x00007fb4bdc9dea7 in start_thread (arg=<optimized out>) at pthread_create.c:477
+#24 0x00007fb4bd828a6f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+```
+
+- 开始选举
+```cpp
+void Monitor::start_election()
+```
