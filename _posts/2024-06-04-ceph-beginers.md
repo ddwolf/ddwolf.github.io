@@ -42,10 +42,10 @@ MON=1 OSD=6 MDS=0 MGR=1 RGW=0 ../src/vstart.sh -d -n -x
 ![图片](https://github.com/ddwolf/ddwolf.github.io/assets/251396/33062916-fbff-48a8-9c37-ad902a2bfa61)
 
 ```bash
-./bin/ceph osd pool create ceph-rbd-demo 64 64 # 64个PG，64个PGP，默认就会有3个副本
+./bin/ceph osd pool create ceph-demo 64 64 # 64个PG，64个PGP，默认就会有3个副本
 echo 123 > a.txt # 生成一个文件，后面我们把这个文件作为一个对象存储到资源池中
-./bin/rados put abc a.txt -p ceph-rbd-demo # 上传文件a.txt，并命名其为abc
-./bin/rados get abc b.txt -p ceph-rbd-demo # 下载名为abc的对象并保存在b.txt中
+./bin/rados put abc a.txt -p ceph-demo # 上传文件a.txt，并命名其为abc
+./bin/rados get abc b.txt -p ceph-demo # 下载名为abc的对象并保存在b.txt中
 ```
 
 ## 接下来就可以通过 gdb 去调试 paxos 了
