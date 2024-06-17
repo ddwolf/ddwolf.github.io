@@ -47,6 +47,8 @@ echo 123 > a.txt # 生成一个文件，后面我们把这个文件作为一个�
 ./bin/rados put abc a.txt -p ceph-demo # 上传文件a.txt，并命名其为abc
 ./bin/rados get abc b.txt -p ceph-demo # 下载名为abc的对象并保存在b.txt中
 ```
+# 开启日志
+For each subsystem, there is a logging level for its output logs (a so-called “log level”) and a logging level for its in-memory logs (a so-called “memory level”). Different values may be set for these two logging levels in each subsystem. Ceph’s logging levels operate on a scale of 1 to 20, where 1 is terse and 20 is verbose. In certain rare cases, there are logging levels that can take a value greater than 20. The resulting logs are extremely verbose.
 
 ## 接下来就可以通过 gdb 去调试 paxos 了
 - paxos begin 调用栈
