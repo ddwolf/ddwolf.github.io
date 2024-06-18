@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cpp-thunk-function"
+date: 2024-06-19
+---
+
 #### Thunk函数生成
 
 **类对象的布局**
