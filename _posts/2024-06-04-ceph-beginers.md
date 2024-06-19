@@ -50,6 +50,31 @@ echo 123 > a.txt # 生成一个文件，后面我们把这个文件作为一个�
 # 开启日志
 For each subsystem, there is a logging level for its output logs (a so-called “log level”) and a logging level for its in-memory logs (a so-called “memory level”). Different values may be set for these two logging levels in each subsystem. Ceph’s logging levels operate on a scale of 1 to 20, where 1 is terse and 20 is verbose. In certain rare cases, there are logging levels that can take a value greater than 20. The resulting logs are extremely verbose.
 
+## 日志使用
+```cpp
+dout(10) << "xxx";
+```
+`dout` 的定义在`debug.h`中，代码如下：
+  ```cpp
+  #define dout(v) ldout((dout_context), (v))
+  ```
+`ldout` 的定义在 `dout.h` 中，代码如下：
+```cpp
+#define dout_prefix *_dout
+#define ldout(cct, v)  dout_impl(cct, dout_subsys, v) dout_prefix
+```
+也就是说，`dout` 会先调用 `dout_prefix`。`dout_prefix` 的返回值是一个 `stream&` 类型，后面可以接 `<<`。 `dout_prefix` 有默认的定义，如果想在某个文件的日志中输出自己的前缀，可以参考 `Elector.cc`：
+```cpp
+#undef dout_prefix
+#define dout_prefix _prefix(_dout, mon, get_epoch())
+// 其它无关代码
+static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
+  return *_dout << "mon." << mon->name << "@" << mon->rank
+		<< "(" << mon->get_state_name()
+		<< ").elector(" << epoch << ") ";
+}
+```
+
 ## 接下来就可以通过 gdb 去调试 paxos 了
 - paxos begin 调用栈
 ```
