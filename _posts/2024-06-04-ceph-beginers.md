@@ -324,6 +324,27 @@ void ElectionLogic::declare_victory()
 }
 message_victory中会调用向每个节点发送 `MMonElection::OP_VICTORY` 消息 
 同时会知会monitor。`mon->win_election`
+在选举被启动的同时，还有一个异步任务被启动。代码如下：
+```cpp
+void Elector::reset_timer ... {
+    expire_event = mon->timer.add_event_after(
+    g_conf()->mon_election_timeout + plus,
+    new C_MonContext{mon, [this](int) {
+	logic.end_election_period();
+      }});
+}
+```
+如果超过mon_election_time+1秒还没有选出主，则 `ElectionLogic::end_election_period()` 会被调用
+```cpp
+ElectionLogic::end_election_period() {
+    if (electing_me &&
+      acked_me.size() > (elector->paxos_size() / 2)) {
+            declare_victory();
+    }
+    ...
+}
+```
+如果elector的个数超过半数，则宣布选主成功
 
 Paxos 请求发送
 1. Paxos::collect {send MMonPaxos::OP_COLLECT}
