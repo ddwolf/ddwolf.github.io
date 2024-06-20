@@ -67,7 +67,6 @@ dout(10) << "xxx";
 ```cpp
 #undef dout_prefix
 #define dout_prefix _prefix(_dout, mon, get_epoch())
-// 其它无关代码
 static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
   return *_dout << "mon." << mon->name << "@" << mon->rank
 		<< "(" << mon->get_state_name()
@@ -282,5 +281,60 @@ CEPHSRC/build/bin/ceph-osd -i 5 -c out2/ceph.conf
 - 开始选举
 ```cpp
 void Monitor::start_election()
-选举发送的消息：MMonElection::OP_PROPOSE，接收消息的代码：Elector::dispatch -> handle_propose
-```
+// 选举发送的消息：`MMonElection::OP_PROPOSE`，通过 `Elector::propose_to_peers` 来触发。
+// 接收选举的代码：`Elector::dispatch` -> `handle_propose` -> `logic.receive_propose`
+// 发送响应的代码：`propose_classic_handler` -> `ElectionLogic::defer` -> `elector->_defer_to`，发送的消息为`new MMonElection(MMonElection::OP_ACK, ...`
+// 如果接收到`OP_PROPOSE`后，发现本节点的rank小于发起选举的节点，则不需要送响应，并决定是否由自己发起新的选举
+// 接收响应的代码：`handle_ack`。更新 peer_info[from]，并调用 `ElectionLogic::receive_ack`。
+void ElectionLogic::receive_ack(int from, epoch_t from_epoch)
+{
+  ceph_assert(from_epoch % 2 == 1); // sender in an election epoch. 单数的epoch是选举中，一旦选举成功，epoch会在bump_epoch方法中自增
+  if (from_epoch > epoch) {
+    ldout(cct, 5) << "woah, that's a newer epoch, i must have rebooted.  bumping and re-starting!" << dendl;
+    bump_epoch(from_epoch);
+    start();
+    return;
+  }
+  // is that _everyone_?
+  if (electing_me) {
+    acked_me.insert(from);
+    if (acked_me.size() == elector->paxos_size()) {
+      // if yes, shortcut to election finish
+      declare_victory();
+    }
+  } else {
+    // ignore, i'm deferring already.
+    ceph_assert(leader_acked >= 0);
+  }
+}
+void ElectionLogic::declare_victory()
+{
+  ldout(cct, 5) << "I win! acked_me=" << acked_me << dendl;
+  last_election_winner = elector->get_my_rank();
+  last_voted_for = last_election_winner;
+  clear_live_election_state();
+
+  set<int> new_quorum;
+  new_quorum.swap(acked_me);
+  
+  ceph_assert(epoch % 2 == 1);  // election
+  bump_epoch(epoch+1);     // is over!
+
+  elector->message_victory(new_quorum);
+}
+message_victory中会调用向每个节点发送 `MMonElection::OP_VICTORY` 消息 
+同时会知会monitor。`mon->win_election`
+
+Paxos 请求发送
+1. Paxos::collect {send MMonPaxos::OP_COLLECT}
+2. handle_collect receive OP_COLLECT {send MMonPaxos::OP_LAST}
+3. handle_last receive OP_LAST {optionally send MMonPaxos::OP_COMMIT}
+4. handle_commit receive OP_COMMIT {store_commit}
+--------
+5. Paxos::begin {send MMonPaxos::OP_BEGIN}
+6. Paxos::handle_begin {send MMonPaxos::OP_ACCEPT}
+7. Paxos::handle_accept {
+  commit_start
+}
+
+peon节点和主节点必须有相同的last_commit才能返回OP_LEASE_OK，否则直接忽略OP_LEASE请求
