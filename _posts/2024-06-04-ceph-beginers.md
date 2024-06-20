@@ -75,6 +75,180 @@ static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
 }
 ```
 
+## vstart 启动时的输出，可以看到很多默认的配置信息
+```
+** going verbose **
+rm -f core*
+hostname DESKTOP-DONHL05
+ip x.x.x.x
+port 40112
+CEPHSRC/build/bin/ceph-authtool --create-keyring --gen-key --name=mon. out2/keyring --cap mon 'allow *'
+creating out2/keyring
+CEPHSRC/build/bin/ceph-authtool --gen-key --name=client.admin --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *' out2/keyring
+CEPHSRC/build/bin/monmaptool --create --clobber --addv a [v2:x.x.x.x:40112,v1:x.x.x.x:40113] --addv b [v2:x.x.x.x:40114,v1:x.x.x.x:40115] --addv c [v2:x.x.x.x:40116,v1:x.x.x.x:40117] --print /tmp/ceph_monmap.32370
+CEPHSRC/build/bin/monmaptool: monmap file /tmp/ceph_monmap.32370
+CEPHSRC/build/bin/monmaptool: generated fsid xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+setting min_mon_release = pacific
+epoch 0
+fsid xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+last_changed 2024-06-21T02:03:44.581412+0800
+created 2024-06-21T02:03:44.581412+0800
+min_mon_release 16 (pacific)
+election_strategy: 1
+0: [v2:x.x.x.x:40112/0,v1:x.x.x.x:40113/0] mon.a
+1: [v2:x.x.x.x:40114/0,v1:x.x.x.x:40115/0] mon.b
+2: [v2:x.x.x.x:40116/0,v1:x.x.x.x:40117/0] mon.c
+CEPHSRC/build/bin/monmaptool: writing epoch 0 to /tmp/ceph_monmap.32370 (3 monitors)
+rm -rf -- out2/dev/mon.a
+mkdir -p out2/dev/mon.a
+CEPHSRC/build/bin/ceph-mon --mkfs -c out2/ceph.conf -i a --monmap=/tmp/ceph_monmap.32370 --keyring=out2/keyring
+rm -rf -- out2/dev/mon.b
+mkdir -p out2/dev/mon.b
+CEPHSRC/build/bin/ceph-mon --mkfs -c out2/ceph.conf -i b --monmap=/tmp/ceph_monmap.32370 --keyring=out2/keyring
+rm -rf -- out2/dev/mon.c
+mkdir -p out2/dev/mon.c
+CEPHSRC/build/bin/ceph-mon --mkfs -c out2/ceph.conf -i c --monmap=/tmp/ceph_monmap.32370 --keyring=out2/keyring
+rm -- /tmp/ceph_monmap.32370
+CEPHSRC/build/bin/ceph-mon -i a -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-mon -i b -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-mon -i c -c out2/ceph.conf
+Populating config ...
+
+[mgr]
+        mgr/telemetry/enable = false
+        mgr/telemetry/nag = false
+Setting debug configs ...
+creating out2/dev/mgr.x/keyring
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring -i out2/dev/mgr.x/keyring auth add mgr.x mon 'allow profile mgr' mds 'allow *' osd 'allow *'
+added key for mgr.x
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring config set mgr mgr/dashboard/x/ssl_server_port 41112 --force
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring config set mgr mgr/prometheus/x/server_port 9283 --force
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring config set mgr mgr/restful/x/server_port 42112 --force
+Starting mgr.x
+CEPHSRC/build/bin/ceph-mgr -i x -c out2/ceph.conf
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring mgr stat
+false
+waiting for mgr to become available
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring mgr stat
+false
+waiting for mgr to become available
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring mgr stat
+false
+waiting for mgr to become available
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring mgr stat
+false
+waiting for mgr to become available
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring mgr stat
+true
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring -h
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring dashboard ac-user-create admin -i out2/dashboard-admin-secret.txt administrator --force-password
+{"username": "admin", "password": "$2b$12$kpVzCWhc.0UWc0I9PNdogOiD4k5eoJpeONB4R1F7mxhOnAbYyrY0.", "roles": ["administrator"], "name": null, "email": null, "lastUpdate": 1718906634, "enabled": true, "pwdExpirationDate": null, "pwdUpdateRequired": false}
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring dashboard create-self-signed-cert
+Self-signed certificate created
+add osd0 600533b1-b136-43f9-a846-eacaf5ec162d
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new 600533b1-b136-43f9-a846-eacaf5ec162d -i out2/dev/osd0/new.json
+0
+CEPHSRC/build/bin/ceph-osd -i 0 -c out2/ceph.conf --mkfs --key AQAKb3Rm6iiXJhAA2/z1toU52gTWlRz47eJOug== --osd-uuid 600533b1-b136-43f9-a846-eacaf5ec162d
+2024-06-21T02:03:55.233+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0/block) _read_bdev_label failed to open out2/dev/osd0/block: (2) No such file or directory
+2024-06-21T02:03:55.233+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0/block) _read_bdev_label failed to open out2/dev/osd0/block: (2) No such file or directory
+2024-06-21T02:03:55.233+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0/block) _read_bdev_label failed to open out2/dev/osd0/block: (2) No such file or directory
+2024-06-21T02:03:55.243+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0) _read_fsid unparsable uuid
+2024-06-21T02:03:55.243+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0) _minimal_open_bluefs out2/dev/osd0/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:55.243+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0) _open_db failed to prepare db environment:
+2024-06-21T02:03:55.593+0800 7f9a587baf80 -1 bluestore(out2/dev/osd0) mkfs failed, (5) Input/output error
+2024-06-21T02:03:55.593+0800 7f9a587baf80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:03:55.593+0800 7f9a587baf80 -1  ** ERROR: error creating empty object store in out2/dev/osd0: (5) Input/output error
+start osd.0
+osd 0 CEPHSRC/build/bin/ceph-osd -i 0 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 0 -c out2/ceph.conf
+add osd1 52e715ab-4e4b-48cd-8f43-84eb705afca2
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new 52e715ab-4e4b-48cd-8f43-84eb705afca2 -i out2/dev/osd1/new.json
+2024-06-21T02:03:55.753+0800 7fceb1010f80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd0: (2) No such file or directory
+1
+CEPHSRC/build/bin/ceph-osd -i 1 -c out2/ceph.conf --mkfs --key AQALb3RmTiU4KRAAEXvOXFSWY91+3uuo2+bgIg== --osd-uuid 52e715ab-4e4b-48cd-8f43-84eb705afca2
+2024-06-21T02:03:56.143+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1/block) _read_bdev_label failed to open out2/dev/osd1/block: (2) No such file or directory
+2024-06-21T02:03:56.143+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1/block) _read_bdev_label failed to open out2/dev/osd1/block: (2) No such file or directory
+2024-06-21T02:03:56.143+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1/block) _read_bdev_label failed to open out2/dev/osd1/block: (2) No such file or directory
+2024-06-21T02:03:56.143+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1) _read_fsid unparsable uuid
+2024-06-21T02:03:56.153+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1) _minimal_open_bluefs out2/dev/osd1/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:56.153+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1) _open_db failed to prepare db environment:
+2024-06-21T02:03:56.493+0800 7fbb1de9ef80 -1 bluestore(out2/dev/osd1) mkfs failed, (5) Input/output error
+2024-06-21T02:03:56.493+0800 7fbb1de9ef80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:03:56.493+0800 7fbb1de9ef80 -1  ** ERROR: error creating empty object store in out2/dev/osd1: (5) Input/output error
+start osd.1
+osd 1 CEPHSRC/build/bin/ceph-osd -i 1 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 1 -c out2/ceph.conf
+add osd2 7f38089f-aa3a-43f0-8cd9-066eda9e7191
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new 7f38089f-aa3a-43f0-8cd9-066eda9e7191 -i out2/dev/osd2/new.json
+2024-06-21T02:03:56.593+0800 7fa21a4aff80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd1: (2) No such file or directory
+2
+CEPHSRC/build/bin/ceph-osd -i 2 -c out2/ceph.conf --mkfs --key AQAMb3RmPNEcIxAAKKEBiS7Q7ofGAt05WPhmoA== --osd-uuid 7f38089f-aa3a-43f0-8cd9-066eda9e7191
+2024-06-21T02:03:57.053+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2/block) _read_bdev_label failed to open out2/dev/osd2/block: (2) No such file or directory
+2024-06-21T02:03:57.053+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2/block) _read_bdev_label failed to open out2/dev/osd2/block: (2) No such file or directory
+2024-06-21T02:03:57.053+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2/block) _read_bdev_label failed to open out2/dev/osd2/block: (2) No such file or directory
+2024-06-21T02:03:57.063+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2) _read_fsid unparsable uuid
+2024-06-21T02:03:57.073+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2) _minimal_open_bluefs out2/dev/osd2/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:57.073+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2) _open_db failed to prepare db environment:
+2024-06-21T02:03:57.393+0800 7fc9c5951f80 -1 bluestore(out2/dev/osd2) mkfs failed, (5) Input/output error
+2024-06-21T02:03:57.393+0800 7fc9c5951f80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:03:57.393+0800 7fc9c5951f80 -1  ** ERROR: error creating empty object store in out2/dev/osd2: (5) Input/output error
+start osd.2
+osd 2 CEPHSRC/build/bin/ceph-osd -i 2 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 2 -c out2/ceph.conf
+add osd3 d1a2b089-f171-44e8-8ac2-1b142ddfd8c3
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new d1a2b089-f171-44e8-8ac2-1b142ddfd8c3 -i out2/dev/osd3/new.json
+2024-06-21T02:03:57.493+0800 7f2417f9ff80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd2: (2) No such file or directory
+3
+CEPHSRC/build/bin/ceph-osd -i 3 -c out2/ceph.conf --mkfs --key AQANb3RmJrO7HBAA0n1K6O46QArnjd/T7ggGIg== --osd-uuid d1a2b089-f171-44e8-8ac2-1b142ddfd8c3
+2024-06-21T02:03:57.933+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3/block) _read_bdev_label failed to open out2/dev/osd3/block: (2) No such file or directory
+2024-06-21T02:03:57.933+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3/block) _read_bdev_label failed to open out2/dev/osd3/block: (2) No such file or directory
+2024-06-21T02:03:57.933+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3/block) _read_bdev_label failed to open out2/dev/osd3/block: (2) No such file or directory
+2024-06-21T02:03:57.943+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3) _read_fsid unparsable uuid
+2024-06-21T02:03:57.953+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3) _minimal_open_bluefs out2/dev/osd3/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:57.953+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3) _open_db failed to prepare db environment:
+2024-06-21T02:03:58.283+0800 7f5e2f04af80 -1 bluestore(out2/dev/osd3) mkfs failed, (5) Input/output error
+2024-06-21T02:03:58.283+0800 7f5e2f04af80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:03:58.283+0800 7f5e2f04af80 -1  ** ERROR: error creating empty object store in out2/dev/osd3: (5) Input/output error
+start osd.3
+osd 3 CEPHSRC/build/bin/ceph-osd -i 3 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 3 -c out2/ceph.conf
+add osd4 77bc39e7-57bc-4ef9-b9ad-707079aaf2c5
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new 77bc39e7-57bc-4ef9-b9ad-707079aaf2c5 -i out2/dev/osd4/new.json
+2024-06-21T02:03:58.373+0800 7fb06fa4ef80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd3: (2) No such file or directory
+4
+CEPHSRC/build/bin/ceph-osd -i 4 -c out2/ceph.conf --mkfs --key AQAOb3RmOLGoFRAALIUGujhk62RLkMYlzvzMBg== --osd-uuid 77bc39e7-57bc-4ef9-b9ad-707079aaf2c5
+2024-06-21T02:03:58.833+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4/block) _read_bdev_label failed to open out2/dev/osd4/block: (2) No such file or directory
+2024-06-21T02:03:58.833+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4/block) _read_bdev_label failed to open out2/dev/osd4/block: (2) No such file or directory
+2024-06-21T02:03:58.833+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4/block) _read_bdev_label failed to open out2/dev/osd4/block: (2) No such file or directory
+2024-06-21T02:03:58.843+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4) _read_fsid unparsable uuid
+2024-06-21T02:03:58.843+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4) _minimal_open_bluefs out2/dev/osd4/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:58.843+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4) _open_db failed to prepare db environment:
+2024-06-21T02:03:59.193+0800 7f4516c31f80 -1 bluestore(out2/dev/osd4) mkfs failed, (5) Input/output error
+2024-06-21T02:03:59.193+0800 7f4516c31f80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:03:59.193+0800 7f4516c31f80 -1  ** ERROR: error creating empty object store in out2/dev/osd4: (5) Input/output error
+start osd.4
+osd 4 CEPHSRC/build/bin/ceph-osd -i 4 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 4 -c out2/ceph.conf
+add osd5 7e4eb6b1-e77d-437f-9337-ee0b286b2ca2
+CEPHSRC/build/bin/ceph -c out2/ceph.conf -k out2/keyring osd new 7e4eb6b1-e77d-437f-9337-ee0b286b2ca2 -i out2/dev/osd5/new.json
+2024-06-21T02:03:59.283+0800 7f6c70863f80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd4: (2) No such file or directory
+5
+CEPHSRC/build/bin/ceph-osd -i 5 -c out2/ceph.conf --mkfs --key AQAPb3Rml82/EBAAH0rTDI/fZvC2frIlLma1Xw== --osd-uuid 7e4eb6b1-e77d-437f-9337-ee0b286b2ca2
+2024-06-21T02:03:59.713+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5/block) _read_bdev_label failed to open out2/dev/osd5/block: (2) No such file or directory
+2024-06-21T02:03:59.713+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5/block) _read_bdev_label failed to open out2/dev/osd5/block: (2) No such file or directory
+2024-06-21T02:03:59.713+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5/block) _read_bdev_label failed to open out2/dev/osd5/block: (2) No such file or directory
+2024-06-21T02:03:59.723+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5) _read_fsid unparsable uuid
+2024-06-21T02:03:59.723+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5) _minimal_open_bluefs out2/dev/osd5/block.db symlink exists but target unusable: (2) No such file or directory
+2024-06-21T02:03:59.723+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5) _open_db failed to prepare db environment:
+2024-06-21T02:04:00.053+0800 7f38cc457f80 -1 bluestore(out2/dev/osd5) mkfs failed, (5) Input/output error
+2024-06-21T02:04:00.053+0800 7f38cc457f80 -1 OSD::mkfs: ObjectStore::mkfs failed with error (5) Input/output error
+2024-06-21T02:04:00.053+0800 7f38cc457f80 -1  ** ERROR: error creating empty object store in out2/dev/osd5: (5) Input/output error
+start osd.5
+osd 5 CEPHSRC/build/bin/ceph-osd -i 5 -c out2/ceph.conf
+CEPHSRC/build/bin/ceph-osd -i 5 -c out2/ceph.conf
+2024-06-21T02:04:00.133+0800 7f3e7d952f80 -1  ** ERROR: unable to open OSD superblock on out2/dev/osd5: (2) No such file or directory
+```
+
 ## 接下来就可以通过 gdb 去调试 paxos 了
 - paxos begin 调用栈
 ```
@@ -103,7 +277,10 @@ static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
 #24 0x00007fb4bd828a6f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
 ```
 
+- ceph-monitor 入口：ceph_mon.cc
+
 - 开始选举
 ```cpp
 void Monitor::start_election()
+选举发送的消息：MMonElection::OP_PROPOSE，接收消息的代码：Elector::dispatch -> handle_propose
 ```
