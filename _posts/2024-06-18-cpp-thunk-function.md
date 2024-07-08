@@ -7,6 +7,8 @@ date: 2024-06-18
 #### Thunk函数生成
 
 **类对象的布局**
+##### 输出vtable布局的命令及参数如下
+`clang++ -c virtual.cc -Xclang -fdump-vtable-layouts`
 
 一个类对象在内存中由以下三部分顺序组成
 

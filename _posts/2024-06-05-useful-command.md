@@ -16,3 +16,13 @@ date: 2024-06-05
  t a a bt 是 thread apply all bt 的简写
  quit 退出
 ```
+
+# gdb
+`x/8gx c._vptr$Base-0x2` 8个一组打印内存值
+```gdb
+set print demangle on
+set print asm-demangle on
+```
+自动解析c++的符号名称，输出更友好。not `_ZTV7Derived`, but` vtable for Derived`。
+
+
