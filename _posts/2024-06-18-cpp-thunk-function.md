@@ -131,7 +131,7 @@ struct B : public A, public virtual V {double j; virtual void f() override {}};
    return C::f(cp)
    ```
 
-   
+
 
 2. 如果`A`本身是被虚继承的，则A相对于C的偏移是不确定的，这个偏移保存在vtable中，与f对应的vcall_offset中。此`vcall_offset`在`vtalbe`中的相对索引vcall_offset_offset在编译时是已知的。th_f的伪代码为：
 
@@ -143,7 +143,7 @@ struct B : public A, public virtual V {double j; virtual void f() override {}};
    return C::f(cp)
    ```
 
-   
+
 
 3. 如果`A`本身不是被虚继承的，但是在由`A`到`C`的继承关系中，有一个被虚继承的`B`，即`A <-- B <-- C <-- X`。我们让`B`是由`A`到`C`的继承关系中遇到的第一个虚继承（即`B`与`C`之间可能还有其它虚基类，但A与B之间没有其它虚继承）。我们可以得到如下结论：
 
@@ -167,7 +167,7 @@ struct B : public A, public virtual V {double j; virtual void f() override {}};
    return C::f(cp)
    ```
 
-   
+
 
 **返回值调整**
 

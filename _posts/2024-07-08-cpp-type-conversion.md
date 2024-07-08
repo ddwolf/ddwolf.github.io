@@ -12,8 +12,10 @@ date: 2024-07-08
 
 #### 代码
 ```cpp
+// compile with : 
+// clang++ complex.cpp -g -std=c++11 -Xclang -fdump-record-layouts -Xclang -fdump-vtable-layouts
  struct A {
- ▸ int a;
+   int a;
    char s1[10];
    virtual void f() {}
  };
@@ -23,7 +25,7 @@ date: 2024-07-08
    virtual void h() {}
  };
  struct B : public E {
- ▸ int b;
+   int b;
    char s2[20];
    virtual void g() {}
  };

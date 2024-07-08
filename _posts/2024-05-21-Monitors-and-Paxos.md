@@ -2,7 +2,7 @@
 layout: post  
 title: "ceph monitors and paxos, a chat with Joao"
 date: 2024-05-21
----       
+---
 
 ### 这是一篇关于monitors和paxos的问答，转到这里，就算看过了（划掉）        
 [Monitors and Paxos, a chat with Joao][1] 

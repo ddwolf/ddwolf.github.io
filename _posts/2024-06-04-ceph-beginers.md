@@ -316,13 +316,13 @@ void ElectionLogic::declare_victory()
 
   set<int> new_quorum;
   new_quorum.swap(acked_me);
-  
+
   ceph_assert(epoch % 2 == 1);  // election
   bump_epoch(epoch+1);     // is over!
 
   elector->message_victory(new_quorum);
 }
-message_victory中会调用向每个节点发送 `MMonElection::OP_VICTORY` 消息 
+message_victory中会调用向每个节点发送 `MMonElection::OP_VICTORY` 消息
 同时会知会monitor。`mon->win_election`
 在选举被启动的同时，还有一个异步任务被启动。代码如下：
 ```cpp
