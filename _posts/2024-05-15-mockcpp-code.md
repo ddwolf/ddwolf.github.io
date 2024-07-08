@@ -73,3 +73,5 @@ TypelessConstraintAdapterImpl
 TypelessConstraint 无类型信息 eval(void)
 struct Constraint 包含类型信息 eval(RefAny)
 
+## 链接：下面是一个轻量的mock实现，可以mock虚方法。
+https://github.com/wangyongfeng5/lmock
