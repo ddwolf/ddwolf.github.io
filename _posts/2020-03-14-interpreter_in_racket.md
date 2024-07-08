@@ -49,7 +49,7 @@
       ((null? entry) (entry-f name))
       (else
        (find-in-entry-help name
-                           (first entry) 
+                           (first entry)
                            (second entry)
                            entry-f))))
   )
@@ -66,7 +66,7 @@
   (lambda (name table table-f)
     (cond
       ((null? table) (table-f name))
-      (else (find-in-entry name 
+      (else (find-in-entry name
                            (first table)
                            (lambda (name) (find-in-table name (cdr table) table-f))))
       )))
@@ -156,7 +156,7 @@
 (define *identifier
   (lambda (l env)
     (cond
-      ((atom? l) (find-in-table l env error))      
+      ((atom? l) (find-in-table l env error))
       (else (find-in-table (first l) env error))
       )
     )

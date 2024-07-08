@@ -13,7 +13,7 @@ clang -Xclang -fdump-record-layouts abi_example_1.cpp
 示例1:
 ```cpp
 // A是B的第一个非虚继承的动态类，所以A是B的primary (virtual) base。对应算法中的第一个条件。
-struct A { virtual void f()}; 
+struct A { virtual void f()};
 struct B : public A {}
 ```
 
@@ -21,7 +21,7 @@ struct B : public A {}
 ```cpp
 // A不是B的第一个非虚继承的动态类，但是是第一个nearly empty base class，又因为B没有其它基类，所以A不是任何其它基类的primary base，所以A是B的primary (virtual) base。对应算法中的第二个条件。
 struct A {virtual void f()};
-struct B : public virtual A {}; 
+struct B : public virtual A {};
 ```
 
 示例3:
@@ -29,7 +29,7 @@ struct B : public virtual A {};
 // C没有非虚继承的动态类，A和B都是nearly empty class，但是A是C的一个基类B的primary base，也就是文档中所说的indirect primary base class，所以A不是C的primary base class，B不是indirect primary base class，所以B是C的primary (virtual) base。对应算法中的第二个条件。
 struct A {virtual void f()};
 struct B : public virtual A {};
-struct C : public virtual B {}; 
+struct C : public virtual B {};
 ```
 
 示例4:

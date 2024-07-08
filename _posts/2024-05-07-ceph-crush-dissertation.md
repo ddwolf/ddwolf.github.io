@@ -91,8 +91,8 @@ $\text{end procedure} \\\\
 \quad\quad\quad\quad\quad\quad\quad\text{retry\_descent ← true }\qquad\triangleleft \text{ Otherwise retry descent from i}\\\\ 
 \quad\quad\quad\quad\quad\quad\text{end if}\\\\ 
 \quad\quad\quad\quad\quad\text{end if}\\\\ 
-\quad\quad\quad\quad\text{until ¬retry\_bucket}\\\\ 
-\quad\quad\quad\text{until ¬retry\_descent}\\\\ 
+\quad\quad\quad\quad\text{until retry\_bucket}\\\\ 
+\quad\quad\quad\text{until retry\_descent}\\\\ 
 \quad\quad\quad\overrightarrow o\text{ ← [}\overrightarrow o\text{,o] }\qquad\triangleleft \text{ Add o to output } \overrightarrow o\\\\ 
 \quad\quad\text{end for}\\\\ 
 \quad\text{end for}\\\\ 

@@ -5,7 +5,7 @@ date: 2024-05-15
 ---
 
 # 重点
-mockcpp实现方法重写的原理是覆盖原函数的字节码为一个jmp指令，具体可参考 JmpCodeImpl 
+mockcpp实现方法重写的原理是覆盖原函数的字节码为一个jmp指令，具体可参考 JmpCodeImpl
 
 ParameterizedApiHookHolder   --   只保存一个函数指针及相应的类型
 ApiHookGenerator/ApiHookFunctor 都只有十个类型。每个类型里面都有静态apiAddress。也就是说，同样函数签名的函数，只允许有十个mock。静态refCount就是引用计数，同一时间只允许有十个对象引用这个ApiHook(特定函数签名，同样地址)
@@ -22,9 +22,9 @@ ChainableMockMethodCore：提供链式调用的关键类，继承Method,继承In
     Method 提供 getName和getNameSpace方法
     Invokable 提供invoke方法
     继承  InvocationMockerContainer：提供如下方法
-        addInvocationMocker(InvocationMocker* mocker) 
-        addDefaultInvocationMocker(InvocationMocker* mocker) 
-        getInvocationMocker(const std::string& id) 
+        addInvocationMocker(InvocationMocker* mocker)
+        addDefaultInvocationMocker(InvocationMocker* mocker)
+        getInvocationMocker(const std::string& id)
 
 InvocationMocker：继承 SelfDescribe，SelfDescribe提供toString方法
     提供如下方法：
@@ -50,7 +50,7 @@ HookMockObject 继承 ChainableMockObjectBase
     Result 只提供 getResult方法
 InvocationMockBuilderGetter 提供如下方法
     StubsBuilder stubs();
-    MockBuilder expects(Matcher* matcher); 
+    MockBuilder expects(Matcher* matcher);
     DefaultBuilder defaults();
     这三种类型都是InvocationMockBuilder的别名，并带有不同的模板参数
     InvocationBuilder是一个继承体系：都有getMocker 方法

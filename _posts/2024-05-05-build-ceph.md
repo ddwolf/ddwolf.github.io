@@ -41,12 +41,12 @@ rbd.pyx:760:44: Cannot assign type 'int (*)(uint64_t, uint64_t, void *) except? 
 * Each OSD maintains a history of past incremental map updates, tags all messages with its latest epoch, and keeps track of the most recent epoch observed to be present at each peer.
 
 ### INTELLIGENT STORAGE DEVICES
-* RADOS currently implements 
+* RADOS currently implements
   - n-way replication combined with -
   - per-object versions and -
   - short-term logs
   for each PG.
-  procedure: 
+  procedure:
   1. client --- single write operation ---> first primary OSD
   2. first primary OSD, update and replicates all replicas
   This shifts replication-related bandwidth to the storage cluster’s internal network and simplifies client design
@@ -66,7 +66,7 @@ rbd.pyx:760:44: Cannot assign type 'int (*)(uint64_t, uint64_t, void *) except? 
 - A failure on the TCP socket results in a limited number of reconnect attempts before a failure is reported to the monitor cluster
 
 #### Data Migration and Failure Recovery
-- RADOS data migration and failure recovery are driven entirely by cluster map updates and subsequent changes in the mapping placement groups to OSDs. 
+- RADOS data migration and failure recovery are driven entirely by cluster map updates and subsequent changes in the mapping placement groups to OSDs.
 - PG recovery in RADOS is coordinated by the primary
 - Thus, in the aggregate, every rereplicated object is read only once
 
