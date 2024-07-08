@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "cpp-类型转换"
-date: 2024-07-09
+date: 2024-07-08
 ---
 ##### dynamic class
     A class requiring a virtual table pointer (because it or its bases have one or more virtual member functions or virtual base classes).
