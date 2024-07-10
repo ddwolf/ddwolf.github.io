@@ -104,6 +104,7 @@ struct B : public A, public virtual V {double j; virtual void f() override {}};
 由于`f`是虚函数，所以，需要通过查找vtable的方式来确定最终需要调用的函数，我们假设，最终需要调用的函数是C::f(C\*)，即C类里面最终定义了f的实现，且C的任何子类没有继续重写f函数。C可能是A本身，也可能是A的一个直接或间接子类。不失一般性，我们可以认为C可能不是most derived class，不防假设X是most derived class。因此，最终的继承关系是`A <--- C <--- X`。注意，这只是局部的继承关系，即，C除了继承自A以外，还有可能继承了其它类；X除了继承C以外，还有可能继承其它类；且这里说的继承关系不一定是直接继承，也有可能是间接继承。
 
 画一个图来展示：
+```
 ┌──────┐◄──────────────X::vptr      
 │      │                            
 │      │                            
@@ -116,7 +117,7 @@ struct B : public A, public virtual V {double j; virtual void f() override {}};
 │      ├────┘                       
 │      │                            
 └──────┘                                      
-
+```
 **this指针调整**
 
 通过`ap`调用 `f` 的时候，最终实际调用的是`func=C::f(C*)`。`func`的参数是`C*`，但`ap`其实是`A*`，所以，不能直接传给`func`，而是需要先将`ap`转换成`C*`。转换的过程写在另一个函数`th_f`里面，这个函数对`ap`做相应的调整后，将调整后的ap传给真正需要调用的`C::f(C*)`，这个`th_f`就是`thunk`函数。通过`A::vptr`指向的虚表查到的f函数实际上就是这个 `th_f`。
