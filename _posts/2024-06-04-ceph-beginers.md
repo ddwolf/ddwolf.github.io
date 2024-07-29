@@ -344,7 +344,8 @@ ElectionLogic::end_election_period() {
     ...
 }
 ```
-如果elector的个数超过半数，则宣布选主成功
+如果elector的个数超过半数，则宣布选主成功。
+选举相关的函数有锁保护，同一时刻只会有一个选主相关的函数在执行。`Dispatcher::ms_dispatch2` 函数调用了 `Monitor::ms_dispatch`，里面有加排它锁。
 
 Paxos 请求发送
 1. Paxos::collect {send MMonPaxos::OP_COLLECT}
@@ -359,3 +360,23 @@ Paxos 请求发送
 }
 
 peon节点和主节点必须有相同的last_commit才能返回OP_LEASE_OK，否则直接忽略OP_LEASE请求
+
+### 关于 proposal_no
+每次选主成功后会生成新的proposal_no，调用的是 `Paxos::get_new_proposal_number`。每个主的统治周期内只有一个proposal_no。
+```cpp
+version_t Paxos::get_new_proposal_number(version_t gt)
+{
+  if (last_pn < gt) 
+    last_pn = gt;
+  
+  // update. make it unique among all monitors.
+  last_pn /= 100;
+  last_pn++;
+  last_pn *= 100;
+  last_pn += (version_t)mon.rank;
+
+  // write
+  // 省略持久化的代码
+  return last_pn;
+}
+```

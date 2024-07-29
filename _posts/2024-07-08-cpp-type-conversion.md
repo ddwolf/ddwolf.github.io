@@ -97,3 +97,14 @@ date: 2024-07-08
   9 VTable indices for 'B' (1 entries).
  10    1 | void B::g()
 ```
+
+### 获取C++虚函数的真实地址
+```cpp
+struct B {
+  virtual void f() {}
+};
+void *addrOfF = reinterpret_cast<void*>(&B::f);
+```
+
+参考资料：
+[C++：虚函数内存布局解析（以 clang 编译器为例）](https://www.less-bug.com/posts/cpp-vtable-and-object-memory-layout-clang-example/)
