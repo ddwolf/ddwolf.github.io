@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "pNFS and Linux:Working Towards a Heterogeneous Future"
-date: 2024-07-08
+date: 2024-10-08
 ---
 
 # 标题：pNFS 和 Linux: 为异构未来而奋斗

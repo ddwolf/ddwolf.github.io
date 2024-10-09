@@ -73,6 +73,10 @@ static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
 		<< ").elector(" << epoch << ") ";
 }
 ```
+## 如果是通过软件仓库安装 ceph，则可以通过下面方式来方便的拉起集群
+```
+MGR_PYTHON_PATH=/usr/share/ceph/mgr EC_PATH=/usr/lib64/ceph/erasure-code/ CEPH_BIN=/usr/bin/ MON=3 OSD=6 MDS=1 MGR=3 RGW=0 ~/vstart.sh -d -n -x
+```
 
 ## vstart 启动时的输出，可以看到很多默认的配置信息
 ```
