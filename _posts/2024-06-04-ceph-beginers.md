@@ -75,18 +75,21 @@ static ostream& _prefix(std::ostream *_dout, Monitor *mon, epoch_t epoch) {
 ```
 ## 如果是通过软件仓库安装 ceph，则可以通过下面方式来方便的拉起集群
 ```
-CEPH_LIB=/usr/lib64/ceph/ \
-MGR_PYTHON_PATH=/usr/share/ceph/mgr \
-EC_PATH=/usr/lib64/ceph/erasure-code/ \
-CEPH_BIN=/usr/bin/ \
-MON=3 \
-OSD=6 \
-MDS=1 \
-MGR=3 \
-RGW=0 \
-~/vstart.sh -d -n -x
+export MGR_PYTHON_PATH=/usr/share/ceph/mgr; 
+export EC_PATH=/usr/lib64/ceph/erasure-code/ ; 
+export CEPH_BIN=/usr/bin/; 
+VSTART_DEST=$HOME/myceph \
+MON=3 OSD=3 MDS=1 MGR=3 RGW=0 ~/vstart.sh -d -n -x --memstore -i 10.103.11.14
 ```
-
+## 挂载 ceph fs 到本地
+```
+# 需要先生成 secret key
+# 生成 secret key 的命令：ceph auth get-key client.admin > ~/ceph_secret
+sudo mount \
+-t ceph \
+10.103.11.14:40197:/ ${HOME}/ceph-point \
+-o name=admin,secretfile=$HOME/ceph_secret
+```
 ## vstart 启动时的输出，可以看到很多默认的配置信息
 ```
 ** going verbose **
