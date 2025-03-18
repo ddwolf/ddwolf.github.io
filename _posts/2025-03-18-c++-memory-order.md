@@ -7,11 +7,11 @@ date: 2025-03-18
 # 标题：图文解释 acquire, release 语义
 内存序之所以是个问题，原因主要在于 `cpu` 的乱序执行和指令多发射。
 
-在内存序领域，有两个操作比较常见，一个是 `acquire`, 一个是 `release`。`acquire` 主要是用于读的场景，`release` 主要用于写的场景。
-在 `C++` 中，有两个 `memory_order` 与之分别对应，分别是 `std::memory_order_acquire`, `std::memory_order_release`。两个 `memory_order` 主要与原子变量的操作有关。其中，`acquire` 类似于获取资源的原语， `release` 类似于释放资源的原语。我们假设`线程1`对原子变量执行 `A: store(memory_order_release)` 操作，`线程2`对同样的原子变量执行 `B: load(memory_order_acquire)` 操作。假设在时间序上，`A` 操作先发生，当`线程2`调用 `acquire 后，**排在 `A` 操作之前的代码对内存所做的所有修改，对排在 `B` 操作之后的代码可见**。
+在内存序领域，有两个操作比较常见，一个是 `acquire`, 一个是 `release`。`acquire` 用于读的场景，`release` 用于写的场景。
+在 `C++` 中，有两个 `memory_order` 与之分别对应，分别是 `std::memory_order_acquire`, `std::memory_order_release`。两个 `memory_order` 主要与原子变量的操作有关。其中，`acquire` 类似于获取资源的原语， `release` 类似于释放资源的原语。我们假设`线程1`对原子变量执行 `A: store(memory_order_release)` 操作，`线程2`对同样的原子变量执行 `B: load(memory_order_acquire)` 操作。假设在时间序上，`A` 操作先发生，当`线程2`调用 `acquire` 后，**排在 `A` 操作之前的代码对内存所做的所有修改，对排在 `B` 操作之后的代码可见**。
 下面我们使用代码来解释。
 
-```cpp
+```
 atomic<int> x{0};
 int data = 0;
 
