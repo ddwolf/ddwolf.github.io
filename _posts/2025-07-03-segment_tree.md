@@ -5,7 +5,7 @@ date: 2025-07-03
 ---
 
 # 标题：下面是一代码 graphviz 代码，表示一幅图，帮助理解线段树
-可以把下面代码粘贴到 https://sketchviz.com/new 中显示出来
+可以把下面代码粘贴到 https://sketchviz.com/new 中显示出来。主要用于查询 `139` 节点到 `200` 节点之间的值。具体范围为 `[139, 200)`
 ```dot
 # http://www.graphviz.org/content/cluster
 
