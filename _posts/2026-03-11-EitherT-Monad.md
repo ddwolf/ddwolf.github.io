@@ -7,7 +7,7 @@ date: 2026-03-11
 ```hs
 newtype EitherT e m a = EitherT { runExceptT :: m (Either e a)}
 instance Show (m (Either e a)) => Show (Either e m a) where
-    show (EitherT ema) = "EitherT ( ++ show ema ++ ")"
+    show (EitherT ema) = "EitherT (" ++ show ema ++ ")"
 ```
 ## Functor 的实现
 ```hs
